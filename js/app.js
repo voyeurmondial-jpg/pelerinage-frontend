@@ -1,4 +1,13 @@
+// js/app.js
+
 function navigate(page) {
+  const user = localStorage.getItem("user");
+
+  if (page === "dashboard" && !user) {
+    renderAuth();
+    return;
+  }
+
   if (page === "login") renderAuth();
   else if (page === "register") renderRegister();
   else if (page === "dashboard") renderDashboard();
@@ -6,5 +15,6 @@ function navigate(page) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  navigate("login");
+  const user = localStorage.getItem("user");
+  navigate(user ? "dashboard" : "login");
 });

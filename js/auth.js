@@ -1,9 +1,19 @@
 function renderAuth() {
-  document.getElementById("app").innerHTML = `
-    <h2 class="text-xl font-bold mb-4">Login</h2>
-    <input id="email" class="border p-2 mb-2 w-full" placeholder="Email">
-    <input id="password" type="password" class="border p-2 mb-2 w-full" placeholder="Password">
-    <button onclick="login()" class="bg-blue-500 text-white px-4 py-2">Login</button>
+  const app = document.getElementById("app");
+
+  app.innerHTML = `
+    <h2 class="text-2xl font-bold mb-4">Connexion</h2>
+
+    <input id="email" type="email" placeholder="Email"
+      class="border p-2 mb-2 w-full" />
+
+    <input id="password" type="password" placeholder="Mot de passe"
+      class="border p-2 mb-4 w-full" />
+
+    <button onclick="login()"
+      class="bg-blue-600 text-white px-4 py-2 rounded">
+      Se connecter
+    </button>
   `;
 }
 
@@ -18,12 +28,14 @@ function login() {
   })
     .then(res => res.json())
     .then(data => {
-      if (data.success) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        navigate("dashboard");
-      } else {
-        alert("Login failed");
+      if (!data.success) {
+        alert("Login incorrect");
+        return;
       }
-    });
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      navigate("dashboard");
+    })
+    .catch(() => alert("Erreur serveur"));
 }

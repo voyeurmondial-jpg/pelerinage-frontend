@@ -18,3 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const user = localStorage.getItem("user");
   navigate(user ? "dashboard" : "login");
 });
+function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  navigate("login");
+}
+
